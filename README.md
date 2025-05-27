@@ -5,7 +5,7 @@
 
 A beautiful, responsive Wedding Anniversary Calculator that helps couples track their marital milestones with detailed statistics and gift suggestions.
 
-![Wedding Anniversary Calculator Screenshot](https://ibb.co/fdnxmb8S)
+![Wedding Anniversary Calculator Screenshot](https://i.ibb.co/LdJZ4MQP/Wedding-Anniversary-Calculator-Celebrate-Your-Love-Journey-27-05-2025-16-25.png)
 
 ## 🌟 Features
 
