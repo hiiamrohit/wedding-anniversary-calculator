@@ -7,6 +7,11 @@ A beautiful, responsive Wedding Anniversary Calculator that helps couples track 
 
 ![Wedding Anniversary Calculator Screenshot](https://i.ibb.co/LdJZ4MQP/Wedding-Anniversary-Calculator-Celebrate-Your-Love-Journey-27-05-2025-16-25.png)
 
+## 🚀 Demo
+
+Try the live demo:  
+👉 [Wedding Anniversary Calculator Demo](https://agecalculator.iamrohit.in/wedding-anniversary-calculator/)
+
 ## 🌟 Features
 
 - **Accurate Anniversary Calculation**:
@@ -29,11 +34,6 @@ A beautiful, responsive Wedding Anniversary Calculator that helps couples track 
   - Elegant blue theme
   - Animated cards with hover effects
   - Romantic emojis and icons
-
-## 🚀 Demo
-
-Try the live demo:  
-👉 [Wedding Anniversary Calculator Demo](https://agecalculator.iamrohit.in/wedding-anniversary-calculator/)
 
 ## 🛠️ Installation
 
