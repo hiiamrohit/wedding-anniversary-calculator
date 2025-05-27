@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Anniversary Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .calculator {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .results {
+            margin-top: 30px;
+            display: none;
+        }
+        .result-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .highlight {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wedding Anniversary Calculator 💍</h1>
+    
+    <div class="calculator">
+        <label for="wedding-date">Your Wedding Date:</label>
+        <input type="date" id="wedding-date" required>
+        
+        <button onclick="calculateAnniversary()">Calculate Anniversary</button>
+        
+        <div id="results" class="results">
+            <h2>Your Anniversary Details</h2>
+            
+            <div class="result-item">
+                <span class="emoji">📅</span>
+                <span>Next Anniversary: <span id="next-anniversary" class="highlight"></span></span>
+            </div>
+            
+            <div class="result-item">
+                <span class="emoji">⏳</span>
+                <span>Days Until Anniversary: <span id="days-until" class="highlight"></span></span>
+            </div>
+            
+            <div class="result-item">
+                <span class="emoji">🎉</span>
+                <span>This Will Be Your: <span id="anniversary-number" class="highlight"></span> anniversary</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="emoji">💑</span>
+                <span>You've Been Married For: <span id="married-duration" class="highlight"></span></span>
+            </div>
+            
+            <div class="result-item">
+                <span class="emoji">🎁</span>
+                <span>Gift Ideas: <span id="gift-ideas" class="highlight"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateAnniversary() {
+            const weddingDateInput = document.getElementById('wedding-date');
+            const weddingDate = new Date(weddingDateInput.value);
+            const today = new Date();
+            
+            if (!weddingDateInput.value) {
+                alert('Please select your wedding date');
+                return;
+            }
+            
+            if (weddingDate > today) {
+                alert('Wedding date cannot be in the future');
+                return;
+            }
+            
+            // Calculate next anniversary
+            const nextAnniversary = new Date(weddingDate);
+            nextAnniversary.setFullYear(today.getFullYear());
+            
+            if (nextAnniversary < today) {
+                nextAnniversary.setFullYear(today.getFullYear() + 1);
+            }
+            
+            // Calculate days until next anniversary
+            const timeDiff = nextAnniversary - today;
+            const daysUntil = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            // Calculate years married
+            const marriageDuration = getDuration(weddingDate, today);
+            const yearsMarried = marriageDuration.years;
+            const nextAnniversaryNumber = yearsMarried + 1;
+            
+            // Get gift ideas
+            const gifts = getAnniversaryGift(nextAnniversaryNumber);
+            
+            // Display results
+            document.getElementById('next-anniversary').textContent = formatDate(nextAnniversary);
+            document.getElementById('days-until').textContent = daysUntil;
+            document.getElementById('anniversary-number').textContent = getOrdinal(nextAnniversaryNumber);
+            document.getElementById('married-duration').textContent = 
+                `${marriageDuration.years} years, ${marriageDuration.months} months, ${marriageDuration.days} days`;
+            document.getElementById('gift-ideas').textContent = 
+                `${gifts.traditional} (traditional) or ${gifts.modern} (modern)`;
+            
+            document.getElementById('results').style.display = 'block';
+        }
+        
+        function getDuration(startDate, endDate) {
+            let years = endDate.getFullYear() - startDate.getFullYear();
+            let months = endDate.getMonth() - startDate.getMonth();
+            let days = endDate.getDate() - startDate.getDate();
+            
+            if (days < 0) {
+                months--;
+                // Get the last day of the previous month
+                const lastDay = new Date(
+                    endDate.getFullYear(),
+                    endDate.getMonth(),
+                    0
+                ).getDate();
+                days += lastDay;
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            return { years, months, days };
+        }
+        
+        function getOrdinal(number) {
+            const suffixes = ['th', 'st', 'nd', 'rd'];
+            const remainder = number % 100;
+            return number + (suffixes[(remainder - 20) % 10] || suffixes[remainder] || suffixes[0]);
+        }
+        
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString(undefined, options);
+        }
+        
+        function getAnniversaryGift(year) {
+            const traditionalGifts = {
+                1: 'Paper', 2: 'Cotton', 3: 'Leather', 4: 'Fruit/Flowers', 5: 'Wood',
+                6: 'Iron', 7: 'Wool/Copper', 8: 'Bronze', 9: 'Pottery', 10: 'Tin/Aluminum',
+                11: 'Steel', 12: 'Silk/Linen', 13: 'Lace', 14: 'Ivory', 15: 'Crystal',
+                20: 'China', 25: 'Silver', 30: 'Pearl', 35: 'Coral', 40: 'Ruby',
+                45: 'Sapphire', 50: 'Gold', 55: 'Emerald', 60: 'Diamond'
+            };
+            
+            const modernGifts = {
+                1: 'Clock', 2: 'China', 3: 'Crystal/Glass', 4: 'Appliances', 5: 'Silverware',
+                6: 'Wood', 7: 'Desk Sets', 8: 'Linens/Lace', 9: 'Leather', 10: 'Diamond Jewelry',
+                11: 'Fashion Jewelry', 12: 'Pearls', 13: 'Textiles/Furs', 14: 'Gold Jewelry', 15: 'Watches',
+                20: 'Platinum', 25: 'Silver', 30: 'Diamond', 35: 'Jade', 40: 'Ruby',
+                45: 'Sapphire', 50: 'Gold', 55: 'Emerald', 60: 'Diamond'
+            };
+            
+            return {
+                traditional: traditionalGifts[year] || 'Special gift',
+                modern: modernGifts[year] || 'Special gift'
+            };
+        }
+    </script>
+</body>
+</html>
