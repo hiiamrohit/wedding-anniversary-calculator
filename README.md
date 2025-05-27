@@ -10,7 +10,7 @@ A beautiful, responsive Wedding Anniversary Calculator that helps couples track 
 ## 🚀 Demo
 
 Try the live demo:  
-👉 [Wedding Anniversary Calculator Demo](https://agecalculator.iamrohit.in/wedding-anniversary-calculator/)
+👉 [Wedding Anniversary Calculator](https://agecalculator.iamrohit.in/wedding-anniversary-calculator/)
 
 ## 🌟 Features
 
